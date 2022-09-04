@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: KevinChamorro-BancoPichincha
+  r2dbc:
+#    url: r2dbc:postgresql://{{REEMPLAZAR IP POR LA DE SU MAQUINA LOCAL}}:5432/db-bp-kch-db
+    url: r2dbc:postgresql://192.168.100.27:5432/db-bp-kch-db
+    username: db-bp-kch-user
+    password: db-bp-kch-pwd-2022
