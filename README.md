@@ -17,7 +17,7 @@
 1. Creacion de la base de datos:</br>
    ``docker run -d --name db-bp-kch -e POSTGRES_DB=db-bp-kch-db -e POSTGRES_USER=db-bp-kch-user -e POSTGRES_PASSWORD=db-bp-kch-pwd-2022 -p 5432:5432 postgres``
 2. Clonar el repositorio:</br>
-``git clone ..``
+``git clone https://github.com/kevinjoe2/kchamorro-bp.git``
 3. Copiar IP de su maquina local en application.yml ubicado en:</br>
 ``\src\main\resources\application.yml``
 4. Ejecutar el siguiente comando en la raiz del repo:</br>
