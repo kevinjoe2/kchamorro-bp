@@ -1,12 +1,12 @@
 package com.kevinchamorro.bancopichincha.dto;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 
+@Builder
 @Getter
-@RequiredArgsConstructor
 public class TransactionRequestDto {
     private final String accountNumber;
     private final BigDecimal transactionValue;

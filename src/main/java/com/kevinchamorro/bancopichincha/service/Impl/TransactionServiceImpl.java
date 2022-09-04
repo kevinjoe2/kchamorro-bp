@@ -34,7 +34,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Flux<TransactionResponseDto> findAll() {
-        return null;
+        return transactionRepo.findAll().map(transactionMapper::toTransactionResponseDto);
     }
 
     @Override

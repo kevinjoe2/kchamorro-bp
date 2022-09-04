@@ -24,7 +24,7 @@
 ``docker build -t kevinchamorro-bancopichincha .``
 5. Posicionarse dentro del repo clonado y ejecutar el siguiente comando para ejecutar el servicio:</br>
 ``docker run -dp 8081:8080 kevinchamorro-bancopichincha``
-6. Importar en POSTMAN el archivo ``postmant.import`` que se encuentra en la raiz del repo.
+6. Importar en POSTMAN el archivo ``postmant.json`` que se encuentra en la raiz del repo.
 7. Una vez importado se podra realizar las acciones solicitadas.
 
 
