@@ -19,6 +19,9 @@ public class TransactionEntity {
     @Id
     private Long id;
 
+    @Column("transaction_number")
+    private String transactionNumber;
+
     @Column("transaction_date")
     private LocalDateTime transactionDate;
 

@@ -26,6 +26,7 @@ DROP TABLE IF EXISTS transactions;
 CREATE TABLE transactions (
     id SERIAL PRIMARY KEY,
     account_id INTEGER,
+    transaction_number VARCHAR(255) UNIQUE,
     transaction_date TIMESTAMP,
     transaction_type VARCHAR(16),
     transaction_value DECIMAL(15,2),
@@ -47,9 +48,18 @@ INSERT INTO accounts (customer_id, account_number, account_type, balance, state)
 VALUES ((SELECT id FROM customers WHERE document_number='0401859376'),
         '049999','Ahorros', 2000, 'ENABLED');
 
-INSERT INTO transactions (account_id, transaction_date, transaction_type, transaction_value, account_initial_balance, account_ending_balance)
-VALUES ((SELECT id FROM accounts WHERE account_number='049999'),
-        '2022-09-03','DEPOSITO', 10, 2000, 2010);
+-- INSERT INTO transactions (account_id, transaction_number, transaction_date, transaction_type, transaction_value, account_initial_balance, account_ending_balance)
+-- VALUES ((SELECT id FROM accounts WHERE account_number='049999'),
+--         'TRA2200000','2022-09-03','DEPOSITO', 10, 2000, 2010);
 
 INSERT INTO parameters (name, value)
 VALUES ('LimiteCupoDiarioRetiro','1000');
+
+INSERT INTO parameters (name, value)
+VALUES ('NumeroCuenta','2200000');
+
+INSERT INTO parameters (name, value)
+VALUES ('NumeroTransaccion','3300000');
+
+INSERT INTO parameters (name, value)
+VALUES ('NumeroCliente','4400000');

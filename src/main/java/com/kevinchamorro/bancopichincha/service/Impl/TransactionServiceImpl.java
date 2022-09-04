@@ -81,22 +81,32 @@ public class TransactionServiceImpl implements TransactionService {
 
         return this.validateLimitTransaction(transactionRequestDto, accountEntity).flatMap(limitExceeded -> {
             if (!limitExceeded){
-
-                TransactionEntity newTransactionEntity = TransactionEntity.builder()
-                        .transactionDate(LocalDateTime.now())
-                        .transactionType(TransactionUtil.transactionTypeByTransactionValue(transactionRequestDto.getTransactionValue()))
-                        .transactionValue(transactionRequestDto.getTransactionValue())
-                        .accountInitialBalance(accountEntity.getBalance())
-                        .accountEndingBalance(accountEntity.getBalance().add(transactionRequestDto.getTransactionValue()))
-                        .accountId(accountEntity.getId())
-                        .build();
-
-                accountEntity.setBalance(accountEntity.getBalance().add(transactionRequestDto.getTransactionValue()));
-
-                return transactionRepo
-                        .save(newTransactionEntity)
-                        .flatMap(transactionEntity -> accountRepo.save(accountEntity).thenReturn(transactionEntity));
-
+                return parameterRepo.findFirstByName("NumeroTransaccion")
+                        .switchIfEmpty(Mono.error(new RuntimeException("El parametro NumeroCuenta")))
+                        .flatMap(parameterEntity -> {
+                            parameterEntity.setValue(String.valueOf(Long.parseLong(parameterEntity.getValue()) + 1L));
+                            return parameterRepo.save(parameterEntity)
+                                    .onErrorMap(errorMap -> new RuntimeException("Error al guardar el parametro"))
+                                    .flatMap(parameterEntityNew -> {
+                                        TransactionEntity newTransactionEntity = TransactionEntity.builder()
+                                                .transactionDate(LocalDateTime.now())
+                                                .transactionNumber(parameterEntityNew.getValue())
+                                                .transactionType(TransactionUtil.transactionTypeByTransactionValue(transactionRequestDto.getTransactionValue()))
+                                                .transactionValue(transactionRequestDto.getTransactionValue())
+                                                .accountInitialBalance(accountEntity.getBalance())
+                                                .accountEndingBalance(accountEntity.getBalance().add(transactionRequestDto.getTransactionValue()))
+                                                .accountId(accountEntity.getId())
+                                                .build();
+                                        accountEntity.setBalance(accountEntity.getBalance().add(transactionRequestDto.getTransactionValue()));
+                                        return transactionRepo
+                                                .save(newTransactionEntity)
+                                                .onErrorMap(errorMap -> new RuntimeException("Error al guardar la transaccion"))
+                                                .flatMap(transactionEntity -> accountRepo.save(accountEntity)
+                                                        .onErrorMap(errorMap -> new RuntimeException("Error al actualizar el balance de la cuenta"))
+                                                        .thenReturn(transactionEntity)
+                                                );
+                                    });
+                        });
             } else {
                 return Mono.error(new RuntimeException("Cupo diario Excedido"));
             }

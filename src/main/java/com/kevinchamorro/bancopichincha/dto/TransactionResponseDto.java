@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 public class TransactionResponseDto {
 
+    private String transactionNumber;
     private LocalDateTime transactionDate;
     private String transactionType;
     private BigDecimal transactionValue;
