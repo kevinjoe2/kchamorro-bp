@@ -42,11 +42,11 @@ CREATE TABLE parameters (
 );
 
 INSERT INTO customers ("name", gender, date_birth, document_number, address, phone, customer_number, "password", state)
-VALUES ('Kevin Chamorro', 'MALE', '1996-01-21','0401859376','Alejandro de Valdez N24-40 y Avenida la Gasca', '+593996427491', 'CUS001', '123456', 'ENABLE');
+VALUES ('Kevin Chamorro', 'MALE', '1996-01-21','0401859376','Alejandro de Valdez N24-40 y Avenida la Gasca', '+593996427491', 'CUS001', '123456', 'ACT');
 
 INSERT INTO accounts (customer_id, account_number, account_type, balance, state)
 VALUES ((SELECT id FROM customers WHERE document_number='0401859376'),
-        '049999','Ahorros', 0, 'ENABLED');
+        '049999','Ahorros', 0, 'ACT');
 
 -- INSERT INTO transactions (account_id, transaction_number, transaction_date, transaction_type, transaction_value, account_initial_balance, account_ending_balance)
 -- VALUES ((SELECT id FROM accounts WHERE account_number='049999'),

@@ -40,6 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Mono<CustomerResponseDto> findByDocumentNumber(String documentNumber) {
         return customerRepo.findFirstByDocumentNumber(documentNumber)
+                .switchIfEmpty(Mono.error(new RuntimeException("El cliente con dicho numero de cuenta no existe")))
                 .map(customerMapper::toCustomerDto);
     }
 
