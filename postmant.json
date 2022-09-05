@@ -55,6 +55,35 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "PATCH Actualizar campos",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"JOELITO\",\r\n    \"gender\":null,\r\n    \"dateBirth\":null,\r\n    \"address\":null,\r\n    \"phone\":null,\r\n    \"password\":null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/customer/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customer",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -205,6 +234,45 @@
 							"port": "8080",
 							"path": [
 								"parameter"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reportes",
+			"item": [
+				{
+					"name": "Listado de Movimiento, por fechas x usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/report/findTransactionByFilters?fechaDesde=2022-09-04&fechaHasta=2022-09-04&NumeroCliente=CUS001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"report",
+								"findTransactionByFilters"
+							],
+							"query": [
+								{
+									"key": "fechaDesde",
+									"value": "2022-09-04"
+								},
+								{
+									"key": "fechaHasta",
+									"value": "2022-09-04"
+								},
+								{
+									"key": "NumeroCliente",
+									"value": "CUS001"
+								}
 							]
 						}
 					},

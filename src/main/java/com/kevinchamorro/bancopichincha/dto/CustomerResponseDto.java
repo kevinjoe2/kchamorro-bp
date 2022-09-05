@@ -8,6 +8,7 @@ import java.time.LocalDate;
 @Builder
 @Getter
 public class CustomerResponseDto {
+    private Long id;
     private String name;
     private String gender;
     private LocalDate dateBirth;
