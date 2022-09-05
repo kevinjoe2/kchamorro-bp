@@ -1,15 +1,14 @@
 package com.kevinchamorro.bancopichincha.entity;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDate;
+
 @Table("customers")
-@Builder
 @Getter
 @Setter
 public class CustomerEntity extends Person {
@@ -23,4 +22,11 @@ public class CustomerEntity extends Person {
     private String password;
 
     private String state;
+
+    public CustomerEntity(String name, String gender, LocalDate dateBirth, String documentNumber, String address, String phone, String clientId, String password, String state) {
+        super(name, gender, dateBirth, documentNumber, address, phone);
+        this.clientId = clientId;
+        this.password = password;
+        this.state = state;
+    }
 }

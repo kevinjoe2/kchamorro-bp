@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("account")
 @RequiredArgsConstructor
 public class AccountController {
+
     private final AccountService accountService;
 
     @GetMapping
@@ -35,25 +36,21 @@ public class AccountController {
     }
 
     @PutMapping("{id}")
-    public Mono<ResponseEntity<Mono<AccountResponseDto>>> post(
-            @PathVariable("id") Long id,
-            @RequestBody Mono<AccountRequestDto> accountRequestDtoMono
+    public Mono<ResponseEntity<Mono<AccountResponseDto>>> put(
+            @PathVariable("id") Long id, @RequestBody Mono<AccountRequestDto> accountRequestDtoMono
     ){
         return Mono.just(ResponseEntity.ok(accountService.update(id, accountRequestDtoMono)));
     }
 
     @PatchMapping("{id}")
     public Mono<ResponseEntity<Mono<AccountResponseDto>>> patch(
-            @PathVariable("id") Long id,
-            @RequestBody Mono<AccountRequestDto> accountRequestDtoMono
+            @PathVariable("id") Long id, @RequestBody Mono<AccountRequestDto> accountRequestDtoMono
     ){
         return Mono.just(ResponseEntity.ok(accountService.patch(id, accountRequestDtoMono)));
     }
 
     @DeleteMapping("{id}")
-    public Mono<ResponseEntity<Mono<Void>>> delete(
-            @PathVariable("id") Long id
-    ){
+    public Mono<ResponseEntity<Mono<Void>>> delete(@PathVariable("id") Long id){
         return Mono.just(ResponseEntity.ok(accountService.delete(id)));
     }
 }

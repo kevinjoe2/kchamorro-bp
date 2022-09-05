@@ -36,7 +36,7 @@ public class CustomerController {
     }
 
     @PutMapping("{id}")
-    public Mono<ResponseEntity<Mono<CustomerResponseDto>>> post(
+    public Mono<ResponseEntity<Mono<CustomerResponseDto>>> put(
             @PathVariable("id") Long id,
             @RequestBody Mono<CustomerRequestDto> customerRequestDtoMono
     ){

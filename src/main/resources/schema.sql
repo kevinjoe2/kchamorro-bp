@@ -46,7 +46,7 @@ VALUES ('Kevin Chamorro', 'MALE', '1996-01-21','0401859376','Alejandro de Valdez
 
 INSERT INTO accounts (customer_id, account_number, account_type, balance, state)
 VALUES ((SELECT id FROM customers WHERE document_number='0401859376'),
-        '049999','Ahorros', 2000, 'ENABLED');
+        '049999','Ahorros', 0, 'ENABLED');
 
 -- INSERT INTO transactions (account_id, transaction_number, transaction_date, transaction_type, transaction_value, account_initial_balance, account_ending_balance)
 -- VALUES ((SELECT id FROM accounts WHERE account_number='049999'),

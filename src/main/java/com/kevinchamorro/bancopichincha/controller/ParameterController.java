@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("parameter")
 @RequiredArgsConstructor
 public class ParameterController {
+
     private final ParameterService parameterService;
 
     @GetMapping
@@ -21,7 +22,7 @@ public class ParameterController {
     }
 
     @GetMapping("findByName")
-    public Mono<ResponseEntity<Mono<ParameterResponseDto>>> getByDocumentNumber(
+    public Mono<ResponseEntity<Mono<ParameterResponseDto>>> getByName(
             @RequestParam("name") String name
     ){
         return Mono.just(ResponseEntity.ok(parameterService.findByName(name)));
@@ -35,7 +36,7 @@ public class ParameterController {
     }
 
     @PutMapping("{id}")
-    public Mono<ResponseEntity<Mono<ParameterResponseDto>>> post(
+    public Mono<ResponseEntity<Mono<ParameterResponseDto>>> put(
             @PathVariable("id") Long id,
             @RequestBody Mono<ParameterRequestDto> parameterRequestDto
     ){

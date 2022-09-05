@@ -12,4 +12,5 @@ public interface ParameterService {
     Mono<ParameterResponseDto> update(Long id, Mono<ParameterRequestDto> parameterRequestDto);
     Mono<ParameterResponseDto> patch(Long id, Mono<ParameterRequestDto> parameterRequestDto);
     Mono<Void> delete(Long id);
+    Mono<String> nextValueByName(String name);
 }

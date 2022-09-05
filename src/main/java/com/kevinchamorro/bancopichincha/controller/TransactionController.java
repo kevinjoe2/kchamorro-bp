@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 @RequestMapping("transaction")
 @RequiredArgsConstructor
 public class TransactionController {
+
     private final TransactionService transactionService;
 
     @GetMapping
@@ -28,7 +29,7 @@ public class TransactionController {
     }
 
     @PutMapping("{id}")
-    public Mono<ResponseEntity<Mono<TransactionResponseDto>>> post(
+    public Mono<ResponseEntity<Mono<TransactionResponseDto>>> put(
             @PathVariable("id") Long id,
             @RequestBody Mono<TransactionRequestDto> transactionRequestDto
     ){

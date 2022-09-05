@@ -1,12 +1,13 @@
 package com.kevinchamorro.bancopichincha.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 import org.springframework.data.relational.core.mapping.Column;
 
 import java.time.LocalDate;
 
+@AllArgsConstructor
 @Getter
 @Setter
 public class Person {

@@ -10,6 +10,5 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AccountMapper {
     AccountResponseDto toAccountResponseDto(AccountEntity entity);
-    AccountEntity toAccountEntity(AccountRequestDto requestDto);
     void putAccountEntityFromDto(AccountRequestDto requestDto, @MappingTarget AccountEntity entity);
 }

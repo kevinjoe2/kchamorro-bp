@@ -14,7 +14,5 @@ public class CustomerRequestDto {
     private String documentNumber;
     private String address;
     private String phone;
-    private String clientId;
     private String password;
-    private String state;
 }

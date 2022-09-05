@@ -27,6 +27,34 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Crear Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Joel Ortega\",\r\n    \"gender\":\"MALE\",\r\n    \"dateBirth\":\"1996-01-21\",\r\n    \"documentNumber\":\"0401859378\",\r\n    \"address\":\"Avenida Granados y 6 de diciembre\",\r\n    \"phone\":\"+593996427499\",\r\n    \"password\":\"ABC123$$$\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/customer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -53,7 +81,7 @@
 					"response": []
 				},
 				{
-					"name": "Guardar cuenta",
+					"name": "Crear cuenta",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -86,7 +114,7 @@
 			"name": "Movimientos",
 			"item": [
 				{
-					"name": "Agregar un Movimiento",
+					"name": "Crear Movimiento",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -158,6 +186,25 @@
 									"key": "name",
 									"value": "LimiteCupoDiarioRetiro"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener todos los parametros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/parameter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"parameter"
 							]
 						}
 					},
