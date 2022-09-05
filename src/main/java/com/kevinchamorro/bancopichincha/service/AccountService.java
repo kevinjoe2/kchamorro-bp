@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 
 public interface AccountService {
     Flux<AccountResponseDto> findAll();
+    Mono<AccountResponseDto> findByAccountId(Long accountId);
     Mono<Long> findAccountIdByAccountNumber(String accountNumber);
     Mono<AccountResponseDto> findByAccountNumber(String accountNumber);
     Mono<AccountResponseDto> save(Mono<AccountRequestDto> accountRequestDto);

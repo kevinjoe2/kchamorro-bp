@@ -16,16 +16,18 @@ public class CustomerEntity extends Person {
     @Id
     private Long id;
 
-    @Column("client_id")
-    private String clientId;
+    @Column("customer_number")
+    private String customerNumber;
 
     private String password;
 
     private String state;
 
-    public CustomerEntity(String name, String gender, LocalDate dateBirth, String documentNumber, String address, String phone, String clientId, String password, String state) {
+    public CustomerEntity(String name, String gender, LocalDate dateBirth, String documentNumber,
+                          String address, String phone, String customerNumber, String password, String state
+    ) {
         super(name, gender, dateBirth, documentNumber, address, phone);
-        this.clientId = clientId;
+        this.customerNumber = customerNumber;
         this.password = password;
         this.state = state;
     }

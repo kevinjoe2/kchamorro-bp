@@ -7,7 +7,7 @@ CREATE TABLE customers (
     document_number VARCHAR(32) UNIQUE,
     address VARCHAR(255),
     phone VARCHAR(32),
-    client_id VARCHAR(32),
+    customer_number VARCHAR(32),
     password VARCHAR(32),
     state VARCHAR(32)
 );
@@ -41,7 +41,7 @@ CREATE TABLE parameters (
     "value" VARCHAR(255)
 );
 
-INSERT INTO customers ("name", gender, date_birth, document_number, address, phone, client_id, "password", state)
+INSERT INTO customers ("name", gender, date_birth, document_number, address, phone, customer_number, "password", state)
 VALUES ('Kevin Chamorro', 'MALE', '1996-01-21','0401859376','Alejandro de Valdez N24-40 y Avenida la Gasca', '+593996427491', 'CUS001', '123456', 'ENABLE');
 
 INSERT INTO accounts (customer_id, account_number, account_type, balance, state)

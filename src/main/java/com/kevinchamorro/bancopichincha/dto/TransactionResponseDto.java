@@ -16,4 +16,5 @@ public class TransactionResponseDto {
     private BigDecimal transactionValue;
     private BigDecimal accountInitialBalance;
     private BigDecimal accountEndingBalance;
+    private String accountNumber;
 }

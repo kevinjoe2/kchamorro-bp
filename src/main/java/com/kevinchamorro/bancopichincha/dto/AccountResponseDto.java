@@ -12,4 +12,6 @@ public class AccountResponseDto {
     private String accountType;
     private BigDecimal balance;
     private String state;
+    private String customerNumber;
+    private String customerDocumentNumber;
 }

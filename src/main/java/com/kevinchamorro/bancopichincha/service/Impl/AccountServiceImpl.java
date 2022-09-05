@@ -32,7 +32,14 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Flux<AccountResponseDto> findAll() {
         return accountRepo.findAll()
-                .map(accountMapper::toAccountResponseDto);
+                .flatMap(this::toAccountResponseDto);
+    }
+
+    @Override
+    public Mono<AccountResponseDto> findByAccountId(Long accountId){
+        return accountRepo.findById(accountId)
+                .switchIfEmpty(Mono.error(new RuntimeException("La cuenta con el numero " + accountId + " no existe")))
+                .flatMap(this::toAccountResponseDto);
     }
 
     public Mono<Long> findAccountIdByAccountNumber(String accountNumber){
@@ -45,14 +52,14 @@ public class AccountServiceImpl implements AccountService {
     public Mono<AccountResponseDto> findByAccountNumber(String accountNumber) {
         return accountRepo.findFirstByAccountNumber(accountNumber)
                 .switchIfEmpty(Mono.error(new RuntimeException("La cuenta con el numero " + accountNumber + " no existe")))
-                .map(accountMapper::toAccountResponseDto);
+                .flatMap(this::toAccountResponseDto);
     }
 
     @Override
     public Mono<AccountResponseDto> save(Mono<AccountRequestDto> accountRequestDto) {
         return accountRequestDto
                 .flatMap(this::saveAccount)
-                .map(accountMapper::toAccountResponseDto);
+                .flatMap(this::toAccountResponseDto);
     }
 
     @Override
@@ -62,7 +69,7 @@ public class AccountServiceImpl implements AccountService {
                             accountMapper.putAccountEntityFromDto(requestDto, accountEntity);
                             return accountRepo.save(accountEntity);
                         }))
-                .map(accountMapper::toAccountResponseDto);
+                .flatMap(this::toAccountResponseDto);
     }
 
     @Override
@@ -72,7 +79,7 @@ public class AccountServiceImpl implements AccountService {
                             patchGeneralMapper.patchAccountEntityFromFto(requestDto, accountEntity);
                             return accountRepo.save(accountEntity);
                         }))
-                .map(accountMapper::toAccountResponseDto);
+                .flatMap(this::toAccountResponseDto);
     }
 
     @Override
@@ -84,7 +91,7 @@ public class AccountServiceImpl implements AccountService {
                     return accountRepo.save(entity)
                             .onErrorMap(errorMap -> new RuntimeException("Error al actualizar el balance de la cuenta"));
                 })
-                .map(accountMapper::toAccountResponseDto);
+                .flatMap(this::toAccountResponseDto);
     }
 
     @Override
@@ -104,5 +111,12 @@ public class AccountServiceImpl implements AccountService {
                                         .customerId(customerId).build()))
                         .flatMap(newAccountEntity -> accountRepo.save(newAccountEntity)
                                 .onErrorMap(errorMap -> new RuntimeException("Error al guardar la cuenta"))));
+    }
+
+    private Mono<AccountResponseDto> toAccountResponseDto(AccountEntity entity){
+        return customerService.findById(entity.getCustomerId())
+                .map(customerResponseDto -> accountMapper.toAccountResponseDto(
+                        entity,customerResponseDto.getDocumentNumber(),
+                        customerResponseDto.getCustomerNumber()));
     }
 }

@@ -4,6 +4,7 @@ import com.kevinchamorro.bancopichincha.dto.CustomerRequestDto;
 import com.kevinchamorro.bancopichincha.dto.CustomerResponseDto;
 import com.kevinchamorro.bancopichincha.entity.CustomerEntity;
 import com.kevinchamorro.bancopichincha.mapper.CustomerMapper;
+import com.kevinchamorro.bancopichincha.mapper.PatchGeneralMapper;
 import com.kevinchamorro.bancopichincha.repository.CustomerRepo;
 import com.kevinchamorro.bancopichincha.service.CustomerService;
 import com.kevinchamorro.bancopichincha.service.ParameterService;
@@ -22,10 +23,17 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepo customerRepo;
     private final ParameterService parameterService;
     private final CustomerMapper customerMapper;
+    private final PatchGeneralMapper patchGeneralMapper;
 
     @Override
     public Flux<CustomerResponseDto> findAll(){
         return customerRepo.findAll()
+                .map(customerMapper::toCustomerDto);
+    }
+
+    @Override
+    public Mono<CustomerResponseDto> findById(Long id) {
+        return customerRepo.findById(id)
                 .map(customerMapper::toCustomerDto);
     }
 
@@ -65,7 +73,13 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Mono<CustomerResponseDto> patch(Long id, Mono<CustomerRequestDto> customerRequestDtoMono) {
-        return Mono.error(new RuntimeException("No implementado"));
+        return customerRequestDtoMono.flatMap(customerRequestDto -> customerRepo.findById(id)
+                .map(customerEntity -> {
+                    patchGeneralMapper.patchCustomerEntityFromFto(customerRequestDto, customerEntity);
+                    return customerEntity;
+                }))
+                .flatMap(customerRepo::save)
+                .map(customerMapper::toCustomerDto);
     }
 
     @Override

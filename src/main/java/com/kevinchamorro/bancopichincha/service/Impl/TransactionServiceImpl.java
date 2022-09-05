@@ -37,7 +37,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Flux<TransactionResponseDto> findAll() {
-        return transactionRepo.findAll().map(transactionMapper::toTransactionResponseDto);
+        return transactionRepo.findAll()
+                .flatMap(this::toTransactionResponseDto);
     }
 
     @Override
@@ -45,7 +46,7 @@ public class TransactionServiceImpl implements TransactionService {
     public Mono<TransactionResponseDto> save(Mono<TransactionRequestDto> transactionRequestDto){
         return transactionRequestDto
                 .flatMap(this::saveTransaction)
-                .map(transactionMapper::toTransactionResponseDto);
+                .flatMap(this::toTransactionResponseDto);
     }
 
     @Override
@@ -114,5 +115,10 @@ public class TransactionServiceImpl implements TransactionService {
                         .map(parameter -> transactionRequestDto.getTransactionValue().add(sum).doubleValue() > Integer.parseInt(parameter.getValue()))
                 )
                 .switchIfEmpty(Mono.just(Boolean.FALSE));
+    }
+
+    private Mono<TransactionResponseDto> toTransactionResponseDto(TransactionEntity entity){
+        return accountService.findByAccountId(entity.getAccountId())
+                .map(accountResponseDto -> transactionMapper.toTransactionResponseDto(entity, accountResponseDto.getAccountNumber()));
     }
 }

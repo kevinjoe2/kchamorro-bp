@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 public interface CustomerService {
 
     Flux<CustomerResponseDto> findAll();
+    Mono<CustomerResponseDto> findById(Long id);
     Mono<CustomerResponseDto> findByDocumentNumber(String documentNumber);
     Mono<Long> findCustomerIdByDocumentNumber(String documentNumber);
     Mono<CustomerResponseDto> save(Mono<CustomerRequestDto> customerRequestDtoMono);
